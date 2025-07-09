@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 
 
-router = APIRouter()
+router = APIRouter(tags=["users"])
 #python -m uvicorn routers.users:app --reload 
 class User(BaseModel):
     id: int
