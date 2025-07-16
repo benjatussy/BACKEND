@@ -29,7 +29,7 @@ users_db = {
         "fullname": "CRISTIANO RONALDO",
         "email": "cris_7@gmail.com",
         "disabled": True,
-        "password": "cr7goat"
+        "password": "1234567"
     }
 }
 
@@ -43,8 +43,11 @@ async def current_user(token: str = Depends(oauth2)):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Credenciales de autenticación inválidas", 
-            headers={"WWW-Authenticate": "Bearer"}
-        )
+            headers={"WWW-Authenticate": "Bearer"})
+    if user.disabled:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Usuario inhabilitado")
     return user
 
 @router.post("/login")
